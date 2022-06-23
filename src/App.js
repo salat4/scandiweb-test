@@ -1,5 +1,6 @@
 import './App.css';
 import  {Navigation}  from './components/Navigation/Navigation';
+import { Hero } from './components/Hero/Hero';
 import {
   ApolloClient,
   InMemoryCache
@@ -11,7 +12,10 @@ export const  client = new ApolloClient({
 
 function App() {
   return(
+    <>
     <Navigation/>
+    <Hero></Hero>
+    </>
   )
 
 }
