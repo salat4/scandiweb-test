@@ -72,7 +72,7 @@ export class Hero extends PureComponent {
                 }
             }`
         })
-        .then(result => this.setState({products:result.data.categories[0    ].products}))
+        .then(result => this.setState({products:result.data.categories[0].products}))
 
     }
     render(){
@@ -80,7 +80,7 @@ export class Hero extends PureComponent {
         return(
             <Main>
                 <Title>Category name</Title>
-                <Product>
+                <Product>   
             {this.state.products !== [] && <ProductCard products = {this.state.products}/>}
 
       

@@ -1,12 +1,16 @@
 import React, {  PureComponent } from "react";
 import styled from "styled-components";
 import logo from "../../image/VSF.png"
+
+import { connect } from "react-redux";
+
 import {
     ApolloClient,
     InMemoryCache,
     gql
   } from "@apollo/client";
-
+import { useSelector,useDispatch } from "react-redux";
+import { choiseCurrency } from "../../redux/currencySlice";
 const client = new ApolloClient({
     uri: 'http://localhost:4000/',
     cache: new InMemoryCache()
@@ -113,10 +117,9 @@ const arrow =
 
 
 export class Navigation extends PureComponent {
-
-
+  
     state = {
-        currency:[],
+        currency:"",
         gridIsOpen:true,
         };
     componentDidMount(){
@@ -132,30 +135,16 @@ export class Navigation extends PureComponent {
         .then(result => this.setState({currency:result.data.currencies}))
 
     }
-    componentWillUnmount(){
-
-    }
-
-    handelOpen = () =>{
-        this.setState({gridIsOpen:false})
-    }
-    handleClose = (e) => {
    
-        let choseCurrency = [...this.state.currency]
-         for( let i = 0 ; i < this.state.currency.length; i++ ){
-                 
-        if (e.target.id === this.state.currency[i].label){
-            choseCurrency.splice(i,1)
-            choseCurrency = [this.state.currency[i],...choseCurrency]
-        }
-         }
-        this.setState({currency:choseCurrency})
-        this.setState({gridIsOpen:true})
-    }
+
+
 render(){
-   
-    
-const currency = this.state.currency
+    // let choiseCurrency = this.props.choiseCurrency;
+    let currency = this.props.currency;
+    // if(this.props === {}){
+        console.log(this.props)
+
+    // }
 
     return(
         <Top>
@@ -174,20 +163,20 @@ const currency = this.state.currency
                 <img src={logo} alt="logo"  width="31" height="30"/>
             </Logo>
            <Right>
-                <CurrencyBox onClick={this.handelOpen}>
-                    <CurrencyChose>
+                <CurrencyBox>
+                    {/* <CurrencyChose>
                    
                         {currency.length !== 0 &&
                             // <CurrencyActive  key={currency[0].label} >{currency[0].symbol}</CurrencyActive>
                         this.state.gridIsOpen ?  <CurrencyActive  key={currency[0].label} >{currency[0].symbol}</CurrencyActive> : 
                         currency.map((curr)=>(
-                            <Currency key={curr.label} onClick={this.handleClose} id = {curr.label}>{curr.symbol}{curr.label}</Currency>
+                            <Currency key={curr.label}  id = {curr.label}>{curr.symbol}{curr.label}</Currency>
 
                         ))
                          
                         
                          }
-                    </CurrencyChose>
+                    </CurrencyChose> */}
                     <>{arrow}</>
                 </CurrencyBox>
                 <Basket>
@@ -198,3 +187,13 @@ const currency = this.state.currency
     )
 }
 }
+const mapStateToProps = (state) => ({ currency: state.currency })
+
+
+//   const mapDispatchToProps = (dispatch) => {
+//     return{
+//         choiseCurrency: () => dispatch(choiseCurrency()),
+//     }
+//   };
+
+export default connect(mapStateToProps)(Navigation);
