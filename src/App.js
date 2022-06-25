@@ -1,6 +1,8 @@
 import './App.css';
-import  {Navigation}  from './components/Navigation/Navigation';
+import  Navigation  from './components/Navigation/Navigation';
 import { Hero } from './components/Hero/Hero';
+import { connect } from "react-redux";
+
 import {
   ApolloClient,
   InMemoryCache
@@ -11,13 +13,20 @@ export const  client = new ApolloClient({
 });
 
 function App() {
+  
   return(
     <>
-    <Navigation/>
+  
+    <Navigation />
     <Hero></Hero>
     </>
   )
 
 }
+
+
+// function mapStateToProps(state) {
+//   return { currency: state.currency }
+// }
 
 export default App;
