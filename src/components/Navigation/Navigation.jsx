@@ -9,6 +9,7 @@ import {
     gql
   } from "@apollo/client";
 import { choiseCurrency } from "../../redux/currencySlice";
+import { Outlet } from "react-router-dom";
 const client = new ApolloClient({
     uri: 'http://localhost:4000/',
     cache: new InMemoryCache()
@@ -32,6 +33,23 @@ font-weight: 400;
 font-size: 16px;
 line-height: 120%;
 color: #1D1F22;
+:first-child{
+    color:#5ECE7B;
+    ::after{
+        content: ' ';
+        display: inline-block;
+        background-color: #5ECE7B;
+        width: 100%;
+        height: 2px;
+        margin-top: 32px;
+        bottom: -32px;
+        align-items: center; 
+        justify-content:center;
+
+
+    }
+}
+
 `
 const Top = styled.section`
 display:flex;
@@ -61,6 +79,9 @@ line-height: 160%;
 color: #1D1F22;
 padding-top:31px;
 margin-right:22px;
+display:flex;
+align-items: center; 
+
 
 `
 
@@ -86,7 +107,6 @@ padding-left:20px;
 const Basket = styled.div`
 color:#43464E;
 padding-top:35px;
-
 `
 const Svg = styled.svg`
 align-items: center; 
@@ -109,7 +129,6 @@ align-items: center;
 const CurrencyBasket = styled.div`
 margin-bottom:8px;
 display:flex;
-
 `
 const CurrencyList = styled.div`
 box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
@@ -166,6 +185,7 @@ render(){
     let currency = this.state.currency;
     return(
         <Top>
+            
             <Nav>
                 <NavItem>
                 Women
@@ -177,9 +197,11 @@ render(){
                 Kids
                 </NavItem>
             </Nav>
+            
             <Logo>
                 <img src={logo} alt="logo"  width="31" height="30"/>
             </Logo>
+            
            <Right>
                 <CurrencyBox >
 
@@ -205,9 +227,11 @@ render(){
    
                    
                 </CurrencyBox>
-                
+           
+
            </Right>
         </Top>
+        
     )
 }
 }

@@ -6,6 +6,7 @@ import {
     InMemoryCache,
     gql
   } from "@apollo/client";
+import { Outlet } from "react-router-dom";
 
 const Title = styled.p`
 font-family: 'Raleway';
@@ -61,6 +62,7 @@ export class Hero extends PureComponent {
                         name
                         inStock
                         gallery
+                        inStock
                         prices{
                             currency{
                                 label
@@ -78,19 +80,21 @@ export class Hero extends PureComponent {
     render(){
         // console.log(this.state.products)
         return(
-            <Main>
-                <Title>Category name</Title>
-                <Product>   
-            {this.state.products !== [] && <ProductCard products = {this.state.products}/>}
-
-      
-             
-
+            <><Outlet></Outlet>
+                <Main>
                     
-                </Product>
+                    <Title>Category name</Title>
+                    <Product>   
+                {this.state.products !== [] && <ProductCard products = {this.state.products}/>}
 
-            </Main>
-            
+        
+                
+
+                        
+                    </Product>
+
+                </Main>
+            </>
         )
     }
 }

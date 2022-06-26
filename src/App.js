@@ -1,8 +1,8 @@
 import './App.css';
 import  Navigation  from './components/Navigation/Navigation';
 import { Hero } from './components/Hero/Hero';
-import { connect } from "react-redux";
-
+import { Routes, Route } from "react-router-dom";
+import productDescriptionPage from "./components/productDescriptionPage/productDescriptionPage.jsx"
 import {
   ApolloClient,
   InMemoryCache
@@ -16,9 +16,18 @@ function App() {
   
   return(
     <>
-  
-    <Navigation />
-    <Hero></Hero>
+      <Routes>
+        <Route path = "/" element = {<Hero/>}>
+           
+          <Route index element = {<Navigation/>}></Route>
+           
+        </Route>
+        <Route path = "/:ProductCardId" element = {<productDescriptionPage/>}>  
+          </Route> 
+        
+      </Routes>
+    {/* <Navigation />
+    <Hero></Hero> */}
     </>
   )
 

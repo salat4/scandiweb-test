@@ -1,4 +1,5 @@
 import React, {  PureComponent } from "react";
+import { Navigate  } from "react-router-dom";
 import styled from "styled-components";
 // import {
 //     ApolloClient,
@@ -22,7 +23,7 @@ width:354px;
   }
 `
 const ProductImage = styled.img`
-
+position: relative;
 margin-bottom :24px;
 padding-top:10%;
 padding-left:10%;
@@ -64,31 +65,67 @@ font-weight: bold;
 
 color: #1D1F22;
 `
-// const client = new ApolloClient({
-//     uri: 'http://localhost:4000/',
-//     cache: new InMemoryCache()
-//   });
+const OutOfStock = styled.div`
+position: relative;
+overflow: hidden;
+
+`
+const OverlayOutOfStock = styled.div`
+width:80%;
+    position: absolute;
+    right:10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90%;
+    bottom:0; 
+    background: #C4C4C4;
+    opacity: 0.5;; 
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 160%;
+    color: #8D8F9A;
+    `
+    // const client = new ApolloClient({
+    //     uri: 'http://localhost:4000/',
+    //     cache: new InMemoryCache()
+    //   });
 
 
 
-export class ProductCard extends PureComponent {
+    export class ProductCard extends PureComponent {
 
 
-    render(){
+        render(){
+            function ZCX(e){
+                <Navigate to={{
+                    pathname:`/:${e.target.id}`
+                }}></Navigate>
+                // console.log(<Navigate to="/:ProductCardId"></Navigate>)
+        }
         const products = this.props.products;
         return(
             <>
             {products !== [] &&
             products.map((product) =>(
-                <ProductItem key = {product.id}>
-                <ProductImage src={product.gallery[0]} alt = {product.name} width ="354">
+                <ProductItem key = {product.id} id = {product.id} onClick = {ZCX}>
+                    {/* {console.log(product.inStock)} */}
+                    {product.inStock  ?  <ProductImage id = {product.id} src={product.gallery[0]} alt = {product.name} width ="354"></ProductImage>:
+                    <OutOfStock >
+                        <ProductImage id = {product.id} src={product.gallery[0]} alt = {product.name} width ="354"></ProductImage>
+                        <OverlayOutOfStock id = {product.id} >OUT OF STOCK</OverlayOutOfStock>
+                    </OutOfStock>
+                    }
+               
 
-                </ProductImage>
-                <ProductDescription>
-                    <ProductName>
+               
+                <ProductDescription id = {product.id}>
+                    <ProductName id = {product.id}>
                         {product.name}
                     </ProductName>
-                    <ProductPrice>
+                    <ProductPrice id = {product.id}>
                     {product.prices[0].currency.symbol}{product.prices[0].amount}
                     </ProductPrice>
                 </ProductDescription>
