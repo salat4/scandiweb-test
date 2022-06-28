@@ -132,23 +132,41 @@ background: #5ECE7B;
 `
 
     export class ProductCard extends PureComponent {
+
      state={
         isShow:true,
+        id:[],
      }
 
     toggle = (e) => {
-        
+        for (let i = 0 ; i < this.props.products.length ; i++ ){
+            if (this.state.id.length < 7){
+                this.setState((state)=>{
+                    return {id:[...state.id,this.props.products[i].id]}
+                })
+            }
+        }
+
         // console.log(e.target.children)
-        for (let i = 0 ; i < this.props.products.length ; i ++){
-            document.getElementById(this.props.products[i].id).className += {MyClass};
+        //{
+            // console.log(this.props.products.length)
+
+
+        
+            
+        //  }
+            // document.getElementById(this.props.products[i].id).className += {MyClass}; 
             // if (this.props.products[i].id === e.target.id){
             //     this.setState(state => ({ isShow: !state.isShow }));
             // }
-        }
+       
        
       };
-
+     
+  
+   
         render(){
+         
             
             function ZCX(e){
                 <Navigate to={{
@@ -173,11 +191,11 @@ background: #5ECE7B;
 
                
                 <ProductDescription id = {product.id}>
-                  {this.state.isShow &&
+                  {/* {this.state.isShow && */}
                   <Basket>
                   {basket}
               </Basket>
-                  }  
+                  {/* }   */}
                  
                     <ProductName id = {product.id}>
                         {product.name}
