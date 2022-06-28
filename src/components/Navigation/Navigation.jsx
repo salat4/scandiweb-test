@@ -2,6 +2,8 @@ import React, {  PureComponent } from "react";
 import styled from "styled-components";
 import logo from "../../image/VSF.png"
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
     ApolloClient,
@@ -9,7 +11,6 @@ import {
     gql
   } from "@apollo/client";
 import { choiseCurrency } from "../../redux/currencySlice";
-import { Outlet } from "react-router-dom";
 const client = new ApolloClient({
     uri: 'http://localhost:4000/',
     cache: new InMemoryCache()
@@ -33,21 +34,6 @@ font-weight: 400;
 font-size: 16px;
 line-height: 120%;
 color: #1D1F22;
-:first-child{
-    color:#5ECE7B;
-    ::after{
-        content: ' ';
-        display: inline-block;
-        background-color: #5ECE7B;
-        width: 100%;
-        height: 2px;
-        margin-top: 32px;
-        bottom: -32px;
-        align-items: center; 
-        justify-content:center;
-
-
-    }
 }
 
 `
@@ -138,6 +124,24 @@ justify-content: center;
 flex-direction: column;
 
 `
+
+const MenuLink = styled(NavLink)`
+text-decoration: none;
+color: #1D1F22;
+&.active{
+    color:#5ECE7B;
+   ::after{
+        content: ' ';
+        display: inline-block;
+        background-color: #5ECE7B;
+        width: 100%;
+        height: 2px;
+        margin-top: 32px;
+        bottom: -32px;
+        align-items: center; 
+        justify-content:center;
+}
+`
 const basket =
 <Svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M19.5613 3.87359C19.1822 3.41031 18.5924 3.12873 17.9821 3.12873H5.15889L4.75914 1.63901C4.52718 0.773016 3.72769 0.168945 2.80069 0.168945H0.653099C0.295301 0.168945 0 0.450523 0 0.793474C0 1.13562 0.294459 1.418 0.653099 1.418H2.80069C3.11654 1.418 3.39045 1.61936 3.47434 1.92139L6.04306 11.7077C6.27502 12.5737 7.07451 13.1778 8.00152 13.1778H16.4028C17.3289 13.1778 18.1507 12.5737 18.3612 11.7077L19.9405 5.50575C20.0877 4.941 19.9619 4.33693 19.5613 3.87365L19.5613 3.87359ZM18.6566 5.22252L17.0773 11.4245C16.9934 11.7265 16.7195 11.9279 16.4036 11.9279H8.00154C7.68569 11.9279 7.41178 11.7265 7.32789 11.4245L5.49611 4.39756H17.983C18.1936 4.39756 18.4042 4.49824 18.5308 4.65948C18.6567 4.81994 18.7192 5.0213 18.6567 5.22266L18.6566 5.22252Z" fill="#43464E"/>
@@ -182,31 +186,46 @@ class Navigation extends PureComponent {
       }
 render(){
     // let choiseCurrency = this.props.choiseCurrency;
-    let currency = this.state.currency;
+    let currency = this.state.currency; 
+
+
     return(
         <Top>
             
             <Nav>
                 <NavItem>
-                Women
+                    <MenuLink to = "/"
+                    
+                 >
+                        All
+                    </MenuLink>
                 </NavItem>
                 <NavItem>
-                Men
+                    <MenuLink to = "/tech"
+                     
+                 >
+                        Tech
+                    </MenuLink>
                 </NavItem>
                 <NavItem>
-                Kids
+                    <MenuLink to = "/clothes"
+                     
+                 >
+                        Clothes
+                    </MenuLink>
                 </NavItem>
             </Nav>
             
             <Logo>
-                <img src={logo} alt="logo"  width="31" height="30"/>
+                <NavLink to = "/"
+               
+                >
+                    <img src={logo} alt="logo"  width="31" height="30"/>
+                </NavLink>
             </Logo>
-            
            <Right>
                 <CurrencyBox >
-
-
-                        {currency.length !== 0 &&
+                         {currency.length !== 0 &&
                             <CurrencyChoise>
                                 <CurrencyBasket>
                                         <CurrencyActive onClick={this.toggle} key={this.props.currency}>  {this.props.currency}  <>{arrow}</></CurrencyActive>
@@ -235,15 +254,6 @@ render(){
     )
 }
 }
-// const mapStateToProps = state => ({
-
-  
-        
-//         currency: state
-    
-// })
-
-
 function mapStateToProps(state) {
     return { currency: state.currency.value }
   }
@@ -252,5 +262,4 @@ function mapStateToProps(state) {
         choiseCurrency: (state) => dispatch(choiseCurrency(state)),
     }
   };
-
 export default connect(mapStateToProps,mapDispatchToProps)(Navigation);

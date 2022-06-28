@@ -1,6 +1,6 @@
 import React, {  PureComponent } from "react";
 import styled from "styled-components";
-import {ProductCard} from '../ProductCard/ProductCard'
+import {ProductCardClothes} from '../ProductCardClothes/ProductCardClothes'
 import {
     ApolloClient,
     InMemoryCache,
@@ -44,7 +44,7 @@ const client = new ApolloClient({
 
 
 
-export class Hero extends PureComponent {
+export class Clothes extends PureComponent {
     state = {
         id:[],
         products:[],
@@ -74,7 +74,7 @@ export class Hero extends PureComponent {
                 }
             }`
         })
-        .then(result => this.setState({products:result.data.categories[0].products}))
+        .then(result => this.setState({products:result.data.categories[1].products}))
 
     }
     render(){
@@ -85,7 +85,7 @@ export class Hero extends PureComponent {
                     
                     <Title>Category name</Title>
                     <Product>   
-                {this.state.products !== [] && <ProductCard products = {this.state.products}/>}
+                {this.state.products !== [] && <ProductCardClothes products = {this.state.products}/>}
 
         
                 
