@@ -134,45 +134,31 @@ background: #5ECE7B;
     export class ProductCard extends PureComponent {
 
      state={
-        isShow:true,
-        id:[],
+        id:{},
      }
 
     toggle = (e) => {
-        for (let i = 0 ; i < this.props.products.length ; i++ ){
-            if (this.state.id.length < 7){
-                this.setState((state)=>{
-                    return {id:[...state.id,this.props.products[i].id]}
-                })
-            }
-        }
-
-        // console.log(e.target.children)
-        //{
-            // console.log(this.props.products.length)
-
-
-        
-            
-        //  }
-            // document.getElementById(this.props.products[i].id).className += {MyClass}; 
-            // if (this.props.products[i].id === e.target.id){
-            //     this.setState(state => ({ isShow: !state.isShow }));
-            // }
-       
-       
-      };
-     
-  
+        this.setState(state => ({id:    {...state.id,[e.target.id]: !state.id[e.target.id] }}));
    
-        render(){
-         
-            
+    };
+   
+       componentDidMount(){
+
+setTimeout(()=>{
+    if(this.props.products.length !== 0){
+        for (let i = 0 ; i < this.props.products.length ; i++ ){
+            this.setState((prevState )=>{
+             return{ id:{...prevState.id,[this.props.products[i].id]:false}}  
+                
+            })
+        
+    }
+    }
+}, 200)    
+       }
+        render(){       
             function ZCX(e){
-                <Navigate to={{
-                    pathname:`/:${e.target.id}`
-                }}></Navigate>
-                // console.log(<Navigate to="/:ProductCardId"></Navigate>)
+                console.log(e.target.id)
         }
         const products = this.props.products;
         return(
@@ -180,7 +166,6 @@ background: #5ECE7B;
             {products !== [] &&
             products.map((product) =>(
                 <ProductItem onMouseEnter={this.toggle} onMouseLeave={this.toggle} key = {product.id} id = {product.id} onClick = {ZCX}>
-                    {/* {console.log(product.inStock)} */}
                     {product.inStock  ?  <ProductImage id = {product.id} src={product.gallery[0]} alt = {product.name} width ="354"></ProductImage>:
                     <OutOfStock >
                         <ProductImage id = {product.id} src={product.gallery[0]} alt = {product.name} width ="354"></ProductImage>
@@ -191,11 +176,14 @@ background: #5ECE7B;
 
                
                 <ProductDescription id = {product.id}>
-                  {/* {this.state.isShow && */}
-                  <Basket>
-                  {basket}
-              </Basket>
-                  {/* }   */}
+                    {product.inStock &&
+                    this.state.id[product.id] &&
+                        <Basket>
+                            {basket}
+                        </Basket>
+                    }
+                  
+     
                  
                     <ProductName id = {product.id}>
                         {product.name}
