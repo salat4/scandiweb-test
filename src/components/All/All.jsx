@@ -63,6 +63,7 @@ export class All extends PureComponent {
                         inStock
                         gallery
                         inStock
+                        category
                         prices{
                             currency{
                                 label
@@ -80,7 +81,7 @@ export class All extends PureComponent {
     render(){
 
         return(
-            <><Outlet></Outlet>
+            <>
                 <Main>
                     
                     <Title>Category name</Title>

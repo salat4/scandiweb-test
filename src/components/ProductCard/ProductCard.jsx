@@ -1,5 +1,5 @@
 import React, {  PureComponent } from "react";
-import { Navigate  } from "react-router-dom";
+import { Link  } from "react-router-dom";
 import styled from "styled-components";
 // import {
 //     ApolloClient,
@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 //   } from "@apollo/client";
 
-const ProductItem = styled.li`
+const ProductItem = styled(Link)`
 margin-left:99px;
 margin-top: 40px;
 position: relative;
@@ -118,18 +118,18 @@ width:80%;
     </Svg>
     
     ;
-const MyClass = styled.span`
-display:none;
-position:fixed;
-right:31px;
-bottom:72px;
-width: 52px;
-height: 52px;
-border-radius:50%;
-color:#FFFFFF;
-background: #5ECE7B;
+// const MyClass = styled.span`
+// display:none;
+// position:fixed;
+// right:31px;
+// bottom:72px;
+// width: 52px;
+// height: 52px;
+// border-radius:50%;
+// color:#FFFFFF;
+// background: #5ECE7B;
 
-`
+// `
 
     export class ProductCard extends PureComponent {
 
@@ -157,15 +157,22 @@ setTimeout(()=>{
 }, 200)    
        }
         render(){       
-            function ZCX(e){
-                console.log(e.target.id)
-        }
-        const products = this.props.products;
+             const products = this.props.products;
         return(
             <>
             {products !== [] &&
-            products.map((product) =>(
-                <ProductItem onMouseEnter={this.toggle} onMouseLeave={this.toggle} key = {product.id} id = {product.id} onClick = {ZCX}>
+                    products.map((product) => (
+                    
+                        <ProductItem onMouseEnter={this.toggle} onMouseLeave={this.toggle} key={product.id} id={product.id}
+
+                            to = { product.category === "clothes" ? `/clothes/${product.id}` : `/tech/${product.id}`}
+                            
+                      
+                        >
+                 
+                            
+
+
                     {product.inStock  ?  <ProductImage id = {product.id} src={product.gallery[0]} alt = {product.name} width ="354"></ProductImage>:
                     <OutOfStock >
                         <ProductImage id = {product.id} src={product.gallery[0]} alt = {product.name} width ="354"></ProductImage>
@@ -192,7 +199,8 @@ setTimeout(()=>{
                     {product.prices[0].currency.symbol}{product.prices[0].amount}
                     </ProductPrice>
                 </ProductDescription>
-        </ProductItem>
+                            </ProductItem>
+                          
             ))}
 
                 

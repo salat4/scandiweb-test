@@ -16,7 +16,7 @@ root.render(
   <StrictMode>
 
     <ApolloProvider client={client}>
-    <BrowserRouter>
+    <BrowserRouter >
       <Provider store={store}>
 
       <App />

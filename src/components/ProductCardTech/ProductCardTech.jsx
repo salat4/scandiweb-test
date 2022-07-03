@@ -1,5 +1,5 @@
 import React, {  PureComponent } from "react";
-import { Navigate  } from "react-router-dom";
+import { Link  } from "react-router-dom";
 import styled from "styled-components";
 // import {
 //     ApolloClient,
@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 //   } from "@apollo/client";
 
-const ProductItem = styled.li`
+const ProductItem = styled(Link)`
 margin-left:99px;
 margin-top: 40px;
 position: relative;
@@ -145,19 +145,12 @@ width:80%;
            }
 
         render(){
-            function ZCX(e){
-                console.log(e)
-                // <Navigate to={{
-                //     pathname:`/:${e.target.id}`
-                // }}></Navigate>
-                // console.log(<Navigate to="/:ProductCardId"></Navigate>)
-        }
         const products = this.props.products;
         return(
             <>
             {products !== [] &&
             products.map((product) =>(
-                <ProductItem onMouseEnter={this.toggle} onMouseLeave={this.toggle} key = {product.id} id = {product.id} onClick = {ZCX}>
+                <ProductItem onMouseEnter={this.toggle} onMouseLeave={this.toggle} key = {product.id} id = {product.id} to = {product.id}>
                     {/* {console.log(product.inStock)} */}
                     {product.inStock  ?  <ProductImage id = {product.id} src={product.gallery[0]} alt = {product.name} width ="354"></ProductImage>:
                     <OutOfStock >

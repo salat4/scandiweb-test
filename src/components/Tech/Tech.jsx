@@ -80,7 +80,7 @@ export class Tech extends PureComponent {
     render(){
         // console.log(this.state.products)
         return(
-            <><Outlet></Outlet>
+            <>
                 <Main>
                     
                     <Title>Category name</Title>
