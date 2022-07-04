@@ -1,6 +1,6 @@
 import React, {  PureComponent } from "react";
 import styled from "styled-components";
-import {ProductCard} from '../ProductCard/ProductCard'
+import ProductCard from '../ProductCard/ProductCard'
 import {
     ApolloClient,
     InMemoryCache,

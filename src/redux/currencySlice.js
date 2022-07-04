@@ -15,6 +15,19 @@ export const currencySlice = createSlice({
 })
 
 
-export const {choiseCurrency} = currencySlice.actions
+export const productSlice = createSlice({
+    name:'product',
+    initialState:[],
+    reducers:{
+        addProduct: (state, action)=>{
+            state.push(action.payload) 
+        }
+    }
+})
 
-export default currencySlice.reducer
+
+
+export const { choiseCurrency } = currencySlice.actions
+export const { addProduct } = productSlice.actions
+
+// export default (currencySlice.reducer, productSlice.reducer)

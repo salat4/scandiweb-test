@@ -7,7 +7,9 @@ import {
   ApolloProvider
 } from "@apollo/client";
 import reportWebVitals from './reportWebVitals';
-import {store} from './redux/store'
+import store, { persistor } from "./redux/store"
+import { PersistGate } from 'redux-persist/integration/react'
+
 import { Provider } from 'react-redux'
 import { BrowserRouter } from "react-router-dom";
 
@@ -18,9 +20,11 @@ root.render(
     <ApolloProvider client={client}>
     <BrowserRouter >
       <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
 
       <App />
-    
+          </PersistGate>
+
       </Provider>
       </BrowserRouter>
     </ApolloProvider>

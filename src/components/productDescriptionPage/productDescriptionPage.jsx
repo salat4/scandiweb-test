@@ -6,6 +6,8 @@ import {
   } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { addProduct } from "../../redux/currencySlice";
 
 const client = new ApolloClient({
     uri: 'http://localhost:4000/',
@@ -74,6 +76,7 @@ height: 52px;
 background: #5ECE7B;
 border-width:0px;
 margin-bottom:40px;
+cursor: pointer;
 
 `
 const Description = styled.div`
@@ -128,6 +131,27 @@ line-height: 120%;
 
 
 
+
+
+
+
+
+const withRouter = WrappedComponent => props => {
+    const params = useParams();
+
+    return (
+        <WrappedComponent
+            {...props}
+            params={params}
+        />
+    )
+}
+
+
+
+
+
+
 class ProductDescriptionPage extends PureComponent {
 state = {
         product:[],
@@ -170,24 +194,27 @@ state = {
     
         setTimeout(() => {
             for (let i = 0; i < this.state.product.gallery.length; i++){
-                // console.log([i])
                 if (this.state.id < this.state.product.gallery.length) {
                        this.setState(state => ({id:[...state.id,i]})) 
                 }
         
         } 
         },200)
-        
-        //  this.setState(state => ({id:  [...state.id,] }));
+
     }
+    addToBasket = () => {
+     
+        this.props.addProduct(this.state.product)
+        }
 
     render() {
+        
+        
         const handleChoise = (e) => {
             this.setState({promoPhoto: e.target.id})
         }
         let id = 0;
         let key = 0;
-        // console.log(this.state.product.gallery.)
     return(
         <Section>
             <Gallery>
@@ -234,7 +261,7 @@ state = {
                         this.state.product.attributes.map((attribute) => (
                             <Attributes key={attribute.id}>
                                 
-                                <AttributeName>{attribute.name}</AttributeName>
+                                <AttributeName>{attribute.name}:</AttributeName>
                                 {attribute.name !== "Color" ? 
                                 <AttributeBox>
                                     {attribute.items.map((item) => (
@@ -278,7 +305,7 @@ state = {
                             }
                     </PriceValue>
                 </Price>
-                <AddToCart>
+                <AddToCart onClick={this.addToBasket}>
                     <ButtonName>
                         ADD TO CART
                     </ButtonName>
@@ -287,12 +314,20 @@ state = {
                 </Description>
             </Left>
         </Section>
+        
     )
 }
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default (props) => (
-    <ProductDescriptionPage {...props}
-    params = {useParams()}/>
-)
+function mapStateToProps(state) {
+    return { product: state }
+  }
+  const mapDispatchToProps = (dispatch) => {
+    return{
+        addProduct: (state) => dispatch(addProduct(state)),
+    }
+  };
+
+let WithUrlDataContainerComponent = withRouter(ProductDescriptionPage);
+ 
+export default connect(mapStateToProps,mapDispatchToProps) (WithUrlDataContainerComponent);

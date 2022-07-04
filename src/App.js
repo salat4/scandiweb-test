@@ -5,6 +5,8 @@ import  {Tech } from "./components/Tech/Tech.jsx"
 import { Clothes } from './components/Clothes/Clothes';
 import { Routes, Route } from "react-router-dom";
 import ProductDescriptionPage from "./components/productDescriptionPage/productDescriptionPage"
+import {A} from "./components/productDescriptionPage/productDescriptionPage"
+
 import {
   ApolloClient,
   InMemoryCache
@@ -23,7 +25,8 @@ function App() {
         
         <Route path = "/" element = {<All/>}/>
         <Route path = "/clothes" element = {<Clothes/>}/>
-        <Route path = "/tech" element = {<Tech/>}/>
+        <Route path="/tech" element={<Tech />} />
+        
         <Route path = "/clothes/:ProductCardId" element = {<ProductDescriptionPage/>}/>  
         <Route path = "/tech/:ProductCardId" element = {<ProductDescriptionPage/>}/>  
       </Routes>
