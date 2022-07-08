@@ -4,7 +4,8 @@ import logo from "../../image/VSF.png"
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import { ModalBasket } from "../ModalBasket/ModalBasket";
+import { ModalCurrency } from "../ModalCurrency/ModalCurrency";
 import {
     ApolloClient,
     InMemoryCache,
@@ -77,34 +78,13 @@ cursor: pointer;
 
 `
 
-const Currency = styled.div`
-font-family: 'Raleway';
-font-style: normal;
-font-weight: 500;
-font-size: 18px;
-line-height: 160%;
-color: #1D1F22;
-padding-top:10px;
-padding-bottom:10px;
-width:114px;
-padding-left:20px;
-:last-child{
-    padding-bottom:10px;
-}
-:hover{
-    background: #EEEEEE;
-}
-`
 
 const Basket = styled.div`
 color:#43464E;
 padding-top:35px;
 cursor: pointer;
 `
-const Svg = styled.svg`
-align-items: center; 
 
-`
 const Arrow = styled.svg`
 margin-left:10px;
 `
@@ -151,204 +131,9 @@ color: #1D1F22;
         justify-content:center;
 }
 `
-const Modal = styled.div`
-position: absolute;
-top:0;
-left:1050px;
-z-index: 3;
-
-    max-height: 500px;
-    overflow-y: scroll;
-    padding: 32px 16px;
-background: #FFFFFF;
+const Svg = styled.svg`
+align-items: center; 
 `
-const BackDrop = styled.div`
-position: fixed;
-width: 100%;
-height: 100%;
-top: 80px;
-left: 0;
-background-color: rgba(0,0,0,0.2);
-opacity: 1;
-z-index: 15;
-    `
-const MyBag = styled.div`
-    margin-bottom:32px;
-    font-family: 'Raleway';
-font-style: normal;
-font-weight: 700;
-font-size: 16px;
-
-color: #1D1F22;
-`
-const Product = styled.li`
-
-    align-items: center;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    :not(:last-child){
-          margin-bottom: 40px;
-    }
-
-
-`
-const Left = styled.div`
-
-`
-
-const Name = styled.div`
-padding-bottom:15px;
-
-`
-const Brand = styled.div`
-padding-bottom:10px;
-
-`
-
-const Price = styled.p  `
-color: #1D1F22;
-padding-bottom:8px;
-
-`
-const Attributes = styled.div`
-`
-const AttributeName = styled.div`
-margin-bottom:8px;
-`
-const AttributeBox = styled.div`
-display:flex; 
-margin-bottom:8px;
-
-`
-const AttributeItem = styled.div`
-padding:3px 8px;
-display:flex;
-background: rgba(255, 255, 255, 0.2);
-align-items: center;
-border: 1px solid #1D1F22;
-:not(:last-child){
-    margin-right:8px;
-}
-justify-content: center;
-`
-const ColorBox = styled.div`
-display:flex;
-
-`
-const ColorItem = styled.div`
-width: 16px;
-height: 16px;
-:not(:last-child){
-    margin-right:8px;
-}
-`
-
-const Center = styled.div`
-    align-items: center;
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-left: auto;
-    margin-right: 8px;
-`
-const ButtonAdd = styled.button`
-    align-items: center;
-    background-color: inherit;
-    border: 1px solid #1d1f22;
-    cursor: pointer;
-    display: flex;
-    height: 24px;
-    justify-content: center;
-    margin-bottom: 58px;
-    position: relative;
-    width: 24px;
-
-::before{
-        background-color: #1d1f22;
-    content: "";
-    display: inline-block;
-    height: 1px;
-    position: absolute;
-    top: 11px;
-    width: 9px;
-}
-::after{
-        background-color: #1d1f22;
-    content: "";
-    display: inline-block;
-    height: 9px;
-    position: absolute;
-    top: 7px;
-    width: 1px;
-}
-`
-const ButtonRemove = styled.button`
-background-color: inherit;
-    border: 1px solid #1d1f22;
-    cursor: pointer;
-    display: flex;
-    height: 24px;
-    justify-content: center;
-    margin-top: 58px;
-    position: relative;
-    width: 24px;
-
-::before{
-        background-color: #1d1f22;
-    content: "";
-    height: 1px;
-    position: absolute;
-    top: 11px;
-    width: 9px;
-}
-}
-`
-const Value = styled.div`
-`
-const Gallery = styled.img`
-width: 121px;
-height: auto;
-`
-const Total = styled.p`
-`
-const TotalPrice = styled.span`
-margin-left:auto;
-padding-right:20px;
-`
-const Buttons = styled.div`
-padding-bottom:32px;
-`
-const ViewBag = styled.button`
-width: 140px;
-height: 43px;
-border: 1px solid #1D1F22;
-background: #FFFFFF;
-color: #1D1F22;
-margin-right:12px;
-`
-const CheckOut = styled.button`
-width: 140px;
-height: 43px;
-background: #5ECE7B;
-color: #FFFFFF;
-border:0;
-`
-const Bottom = styled.div`
-padding-left:16px;
-`
-const BottomNotButton = styled.div`
-display:flex;
-margin-bottom:32px;
-margin-top:32px;
-
-`
-const ProductList = styled.ul`
-  
-
-`
-
 
 const basket =
 <Svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -357,6 +142,8 @@ const basket =
 <path d="M15.6875 13.9814C14.4875 13.9814 13.498 14.9277 13.498 16.0752C13.498 17.2226 14.4876 18.1689 15.6875 18.1689C16.8875 18.1689 17.877 17.2226 17.877 16.0752C17.8565 14.9284 16.8875 13.9814 15.6875 13.9814ZM15.6875 16.9011C15.2031 16.9011 14.8239 16.5385 14.8239 16.0752C14.8239 15.612 15.2031 15.2493 15.6875 15.2493C16.172 15.2493 16.5512 15.612 16.5512 16.0752C16.5512 16.5188 16.1506 16.9011 15.6875 16.9011Z" fill="#43464E"/>
 </Svg>
 ;
+
+
 const arrow =
 <Arrow width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1 0.5L4 3.5L7 0.5" stroke="black" strokeLinecap="round"/>
@@ -368,12 +155,16 @@ const arrow =
 class Navigation extends PureComponent {
 
     state = {
-        currency:[],
+        currency: [],
         gridIsOpen: false,
         isOpenModal: false,
-        sumPrice : 0,
+        sumPrice: 0,
 
-        };
+    };
+    
+
+
+
     componentDidMount() {
         client.query({
             query: gql`
@@ -387,11 +178,13 @@ class Navigation extends PureComponent {
             .then(result => this.setState({ currency: result.data.currencies }))
         for (let i = 0; i < this.props.product.product.length; i++) {
             this.setState((prevState) => {
-                return { sumPrice:prevState.sumPrice +  this.props.product.product[i].prices[0].amount}
+                return { sumPrice: prevState.sumPrice + this.props.product.product[i].prices[0].amount }
             }
             )
         }
+       
     }
+
     // TotalPrice = () => {
        
        // };
@@ -400,28 +193,33 @@ class Navigation extends PureComponent {
         if (this.props.product.product !== prevProps.product.product) {
         this.setState((prevState) => {
                 return { sumPrice:prevState.sumPrice +  this.props.product.product[this.props.product.product.length-1].prices[0].amount}
-            })
-            //   for (let i = 0; i < this.props.product.product.length; i++) {
-            
-        //             }
-            
-                
+            })                
         }
         
     }
 
 
    
-    toggle = () => {
+    toggle = (e) => {
+        // // console.log()
+        
         this.setState(state => ({ gridIsOpen: !state.gridIsOpen }));
       };
       setCurrency = (e) => {
-        this.props.choiseCurrency(e.target.id)
-        this.setState(state => ({ gridIsOpen: !state.gridIsOpen }));
+    
+          this.setState(state => ({ gridIsOpen: !state.gridIsOpen }));
+     
+            this.props.choiseCurrency(e.target.id)
+        
+              
     }
-    openModal = () => {
+        openModal = () => {
         this.setState(state => ({ isOpenModal: !state.isOpenModal }));
     }
+    //     closeModal = () => {
+    //     this.setState(state => ({ isOpenModal: !state.isOpenModal }))
+    // }
+
     render() {
         // let zxc = 0;
     //    const TotalPrice = () => {
@@ -481,101 +279,20 @@ class Navigation extends PureComponent {
                                         <CurrencyActive onClick={this.toggle} key={this.props.currency}>  {this.props.currency}  <>{arrow}</></CurrencyActive>
                                         <Basket onClick={this.openModal}>
                                             <>{basket}</>   
-                                </Basket>
-                                {this.state.isOpenModal &&
-                                    <BackDrop>
-                                        <Modal>
-                                            <MyBag>My Bag, {this.props.product.product.length} items</MyBag>         
-                                        <ProductList>
-                                            {this.props.product.product.map((product) => (    
-                                                
-                                                <Product key={product.id}>
-                                                    
-                                                
-                                                    <Left>
-                                                            <Brand>{ product.brand}</Brand>
-                                                            <Name>{ product.name}</Name>
-                                                            <Price>{product.prices[0].amount}{product.prices[0].currency.symbol }</Price>
-                                                        {product.attributes.map((attribute) => (
-                                                                 <Attributes key={attribute.id}>
-                                
-                                                                <AttributeName>{attribute.name}:</AttributeName>
-                                                                {attribute.name !== "Color" ? 
-                                                                <AttributeBox>
-                                                                        {attribute.items.map((item) => (
-                                                                            <AttributeItem key = {item.id}>
-                                                                        
-                                                                                    {item.value}  
-                                                                    
-                                                                            
-                                                                            </AttributeItem>
-                                                                    
-                                                                        
-                                                                        ))} 
-                                                                    
-                                                               
-                                                                </AttributeBox>
-                                                                    : 
-                                                                    <ColorBox>
-                                                                        {attribute.items.map((item) => (
-                                                                            <ColorItem style = {{backgroundColor:  item.value }} key = {item.id}>
-                                                                        </ColorItem>
-                                                                        ))}
-                                                                    
-                                                                    </ColorBox>
-                                                                    
-                                                                 } 
-                                                                
-
-                                                            
-                                                                
-                                                            </Attributes>
-                                                            ))}
-                                                           
-                                                        </Left>
-                                                        <Center>
-                                                        <ButtonAdd></ButtonAdd>
-                                                         <Value>1</Value>
-                                                            <ButtonRemove></ButtonRemove>
-                                                           
-                                                        </Center>
-                                                    <Gallery src = {product.gallery[0]}>
-                                                        {/* {console.log(product.gallery[0])} */}
-                                                        </Gallery>
-                                                        
-                                                   
-                                                </Product> 
-                                                
-                                            ))}
-                                                    
-                                             </ProductList>       
-                                                <Bottom>
-                                                    <BottomNotButton>
-                                                        <Total>Total</Total>
-                                                        <TotalPrice>{ this.props.product.currency.value}{this.state.sumPrice}</TotalPrice>
-                                                    </BottomNotButton>
-                                                 
-                                                                <Buttons>
-                                                                    <ViewBag>
-                                                                        View bag
-                                                                    </ViewBag>
-                                                                     <CheckOut>
-                                                                        CHECK OUT
-                                                                    </CheckOut>
-                                                                </Buttons>
-                                                </Bottom>
-                                        </Modal>
-                                    </BackDrop>
-                                    
+                                        </Basket>
+                                    {this.state.gridIsOpen === false &&
+                                        this.state.isOpenModal &&
+                                        
+                                    <ModalBasket closeModal = {this.openModal} product = {this.props.product}></ModalBasket>
                                 }
                                
                                 </CurrencyBasket>
-
+                                
                                 <CurrencyList>
-                                    {this.state.gridIsOpen &&
-                                    currency.map((curr)=>(
-                                        <Currency key={curr.label} onClick = {this.setCurrency} id = {curr.symbol}>{curr.symbol}{curr.label}</Currency>
-                                    ))}
+                                    {this.state.isOpenModal === false &&
+                                        this.state.gridIsOpen &&
+                                        <ModalCurrency setCurrency={ this.setCurrency} toggle={this.toggle} currency={currency} ></ModalCurrency>
+                                   }
                             
                                 </CurrencyList>
                             </CurrencyChoise>           
